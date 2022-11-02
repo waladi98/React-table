@@ -5,17 +5,18 @@ export const RxidTable = ({ model, actions }) => {
   const [state, setState] = useState({
     records: [],
     keywords: "",
+    perPage: model.perPage,
   });
 
   useEffect(() => {
     let records = Array.from(model.records);
     records = searchRecords(records);
-    records = records.splice(0, 10);
+    records = records.splice(0, state.perPage);
     setState((state) => ({
       ...state,
       records,
     }));
-  }, [state.keywords]);
+  }, [state.keywords, state.perPage]);
   const searchRecords = (records) => {
     if (!state.keywords) return records;
 
@@ -35,6 +36,12 @@ export const RxidTable = ({ model, actions }) => {
     setState((state) => ({
       ...state,
       keywords,
+    }));
+  };
+  const handleChangePerPage = (perPage) => {
+    setState((state) => ({
+      ...state,
+      perPage,
     }));
   };
   return (
@@ -107,8 +114,8 @@ export const RxidTable = ({ model, actions }) => {
           <select
             className="form-select form-select-sm"
             aria-label=".form-select-sm example"
-            value={10}
-            onChange={(event) => this.handleChangeShowMaxRow(event)}
+            value={state.perPage}
+            onChange={(event) => handleChangePerPage(event.target.value)}
           >
             <option value={5}>5</option>
             <option value={10}>10</option>
