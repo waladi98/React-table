@@ -1,19 +1,8 @@
 import { Fragment } from "react";
 import "./App.css";
-import { RxidTable, TableModel } from "./rxid-table";
+import { RxidTable, useTable } from "./rxid-table";
 
 function App() {
-  const model = new TableModel([
-    { header: "Name", field: "name" },
-    { header: "Email", field: "email" },
-    { header: "Phone Number", field: "phoneNumber" },
-    { header: "Addres", field: "address" },
-  ]);
-
-  const carModel = new TableModel([
-    { header: "Name", field: "name" },
-    { header: "Color", field: "color" },
-  ]);
   const users = [
     {
       id: 1,
@@ -44,9 +33,29 @@ function App() {
       color: "black",
     },
   ];
+  const model = useTable({
+    columns: [
+      { header: "Name", field: "name" },
+      { header: "Email", field: "email" },
+      { header: "Phone Number", field: "phoneNumber" },
+      { header: "Addres", field: "address" },
+    ],
+    records: users,
+  });
 
-  model.setRecords(users);
-  carModel.setRecords(cars);
+  const carModel = useTable({
+    columns: [
+      { header: "Name", field: "name" },
+      { header: "Color", field: "color" },
+    ],
+    records: cars,
+  });
+  // useEffect(() => {
+  //   // model.setRecords(users);
+  //   // carModel.setRecords(cars);
+  // }, []);
+  // model.setRecords(users);
+  // carModel.setRecords(cars);
 
   const handelView = (record) => {
     console.log("info : Come from handelView");

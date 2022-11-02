@@ -1,3 +1,3 @@
-import RxidTable from "./RxidTable";
-import TableModel from "./model/TableModel";
-export { RxidTable, TableModel };
+import { RxidTable } from "./RxidTable";
+import { useTable } from "./useTable";
+export { RxidTable, useTable };
