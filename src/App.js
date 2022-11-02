@@ -35,9 +35,9 @@ function App() {
   ];
   const model = useTable({
     columns: [
-      { header: "Name", field: "name" },
+      { header: "Name", field: "name", sortable: false },
       { header: "Email", field: "email" },
-      { header: "Phone Number", field: "phoneNumber" },
+      { header: "Phone Number", field: "phoneNumber", sortable: false },
       { header: "Addres", field: "address" },
     ],
     records: users,
