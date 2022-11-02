@@ -1,6 +1,42 @@
+import { useEffect, useState } from "react";
 import "./RxidTable.css";
 
 export const RxidTable = ({ model, actions }) => {
+  const [state, setState] = useState({
+    records: [],
+    keywords: "",
+  });
+
+  useEffect(() => {
+    let records = Array.from(model.records);
+    records = searchRecords(records);
+    records = records.splice(0, 10);
+    setState((state) => ({
+      ...state,
+      records,
+    }));
+  }, [state.keywords]);
+  const searchRecords = (records) => {
+    if (!state.keywords) return records;
+
+    return records.filter((records) => {
+      let isMatch = false;
+      model.columns.forEach((column) => {
+        if (isMatch) return;
+        const value = records[column.field] || "";
+        if (value.toLowerCase().includes(state.keywords)) {
+          isMatch = true;
+        }
+      });
+      return isMatch;
+    });
+  };
+  const handleSearch = (keywords) => {
+    setState((state) => ({
+      ...state,
+      keywords,
+    }));
+  };
   return (
     <div className="rxid-table">
       <div className="rxid-table-header">
@@ -14,6 +50,7 @@ export const RxidTable = ({ model, actions }) => {
             placeholder="Search.."
             aria-label="Username"
             aria-describedby="addon-wrapping"
+            onChange={(e) => handleSearch(e.target.value)}
           />
         </div>
       </div>
@@ -44,7 +81,7 @@ export const RxidTable = ({ model, actions }) => {
               </tr>
             </thead>
             <tbody>
-              {model.records.map((record, indexI) => {
+              {state.records.map((record, indexI) => {
                 return (
                   <tr key={indexI}>
                     <td>{indexI + 1}</td>

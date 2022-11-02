@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import "./App.css";
 import { RxidTable, useTable } from "./rxid-table";
-
+import posts from "./posts.json";
 function App() {
   const users = [
     {
@@ -49,6 +49,13 @@ function App() {
       { header: "Color", field: "color" },
     ],
     records: cars,
+  });
+  const postModel = useTable({
+    columns: [
+      { header: "Judul", field: "title" },
+      { header: "Artikel", field: "body" },
+    ],
+    records: posts,
   });
   // useEffect(() => {
   //   // model.setRecords(users);
@@ -100,9 +107,12 @@ function App() {
       <div className="container py-4 ">
         <h1>React Table</h1>
         <h4>Create Reuse table component</h4>
+        <RxidTable model={postModel} />
+        <br />
         <RxidTable model={model} actions={userAction} />
         <br />
         <RxidTable model={carModel} />
+        <br />
       </div>
     </div>
   );
